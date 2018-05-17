@@ -3,8 +3,8 @@ source('summarize_methods.R')
 source("useful_functions.R")
 source("AdaPT.R")
 
-repeat.times <- 2
-seed <- 1
+repeat.times <- as.numeric(Sys.getenv("times"))
+seed <- as.numeric(Sys.getenv("seed"))
 
 simul2 <- function(x, mu, pi,
                    alpha.list,
@@ -43,8 +43,6 @@ simul2 <- function(x, mu, pi,
         res.AdaPT <- try(
             AdaPT.glmnet(x, pvals, beta.family(),
                          glmnet.args = list(nlambda = 30),
-                         period.up = 50,
-                         up.verbose = TRUE,
                          alphas = alpha.list))
         if (class(res.AdaPT) != "try-error"){
             AdaPT.result <- summary.AdaPT(res.AdaPT, H0, pvals)
@@ -78,7 +76,7 @@ simul2 <- function(x, mu, pi,
 m <- 100
 n <- 2000
 alpha.list <- seq(0.01, 0.3, 0.01)
-output.filename <- paste0("data/simul2_seed_", seed, ".RData")
+output.filename <- paste0("../data/simul2_seed_", seed, ".RData")
 
 x <- matrix(runif(n * m), n, m)
 pi1 <- 0.3

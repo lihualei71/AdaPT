@@ -2,7 +2,7 @@ plot.results <- function(vals, methods, title,
                          cols, ltys, pchs,
                          ylim, ylab,
                          legend = TRUE,
-                         cex.legend = 1.2){
+                         cex.legend = 1){
 ### Plot results for each method
     alphalist <- seq(0.01, 0.3, 0.01)
     plot(0:1, 0:1, type = 'n',

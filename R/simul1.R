@@ -3,12 +3,10 @@ source('summarize_methods.R')
 source("useful_functions.R")
 source("All_q_est_functions.R")
 
-rho <- 0
-type <- 0
-repeat.times <- 100
-seed <- 1
+repeat.times <- as.numeric(Sys.getenv("times"))
+seed <- as.numeric(Sys.getenv("seed"))
 
-simul1 <- function(x, mu, H0, rho, type, 
+simul1 <- function(x, mu, H0, 
                    pi.formula, mu.formula, 
                    alpha.list,
                    repeat.times,
@@ -33,19 +31,8 @@ simul1 <- function(x, mu, H0, rho, type,
     ADMM_params <- c(10^2, 10^3, 2, 5000, 1e-3) 
     
     for (i in 1:repeat.times){
-        pvals.flag <- FALSE
-        for (ii in 1:10){
-            pvals <- pvals.gen(n, mu, rho, type)
-            pvals.flag <- (length(pvals) == n) &&
-                (all(!is.na(pvals))) &&
-                    (all(pvals >= 0))
-            if (pvals.flag){
-                break
-            }
-        }
-        if (!pvals.flag){
-            next
-        }
+        z <- rnorm(n) + mu
+        pvals <- 1 - pnorm(z)
         
         BH.result <- summary.BH(pvals, H0, alpha.list)
         summary.FDP[[1]][, i] <- BH.result[, 2]
@@ -107,7 +94,7 @@ x <- expand.grid(x1, x2)
 colnames(x) <- c("x1", "x2")
 pi.formula <- mu.formula <- "s(x1, x2)"
 alpha.list <- seq(0.01, 0.3, 0.01)
-output.filename <- paste0("data/simul1_rho_", floor(rho*10), "_type_", floor(type), "_seed_", seed, ".RData")
+output.filename <- paste0("../data/simul1_seed_", seed, ".RData")
 
 ## Case 1: a circle in the center
 H0 <- apply(x, 1, function(coord){sum(coord^2) < 900})
@@ -151,10 +138,3 @@ result3 <- simul1(x, mu, H0, rho, type,
 ## Save data
 result <- list(result1, result2, result3)
 save(file = output.filename, result)
-
-DG <- apply(edges, 1, function(inds){
-    tmp <- rep(0, n)
-    tmp[inds[1]] <- 1
-    tmp[inds[2]] <- -1
-    matrix(tmp, nrow = 1)
-})

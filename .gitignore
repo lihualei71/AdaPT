@@ -1,0 +1,5 @@
+data/*_res.RData
+data/GEOquery.RData
+*.Rout
+figs/*JRSSB.pdf
+*.tar.gz

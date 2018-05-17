@@ -118,6 +118,5 @@ gene_drug_get_pvals <- function(Data,
     return(output)
 }
 
-#### P-values using all samples
-## output <- gene_drug_get_pvals(Data)
-## save(file = "GEOquery.RData", output)
+output <- gene_drug_get_pvals(Data)
+save(file = "../data/GEOquery.RData", output)
