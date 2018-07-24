@@ -1,7 +1,7 @@
 # Paper Repository
 
 This repository contains the code to exactly reproduce all results and figures in our paper: [AdaPT: An interactive procedure for multiple testing with side information](https://arxiv.org/abs/1609.06035). 
-After the acceptance of the paper, we developed an R package [`adaptMT`] that significantly improves the implementation and enriches the flexibility of AdaPT. Unless the reader just aims at reproducing the results in the paper, we recommend checking out our new repository which re-implements all the examples in the paper, though producing slightly different yet improved results.
+After the acceptance of the paper, we developed an R package [`adaptMT`](https://github.com/lihualei71/adaptMT) that significantly improves the implementation and enriches the flexibility of AdaPT. Unless the reader just aims at reproducing the results in the paper, we recommend checking out our [new repository](https://github.com/lihualei71/adaptPaper) which re-implements all the examples in the paper, though producing slightly different yet improved results.
 
 ## R files
 The folder `R/` contains all R files:
